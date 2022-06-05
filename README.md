@@ -67,6 +67,7 @@ BOOKNAME.setImagedir(r'./images') #括号里面为你想指定的插图目录。
 需要注意的是，你在段落内写在 `%img%`  `%/img%` 之间的文件名，必须与你指定文件夹里面的图片文件名一致；
 且 `%img%`  `%/img%` 之间的文件名必须包含后缀。
 否则那张图片会被替换为流泪猫猫头：
+
 ![流泪猫猫头 图片](https://github.com/Macaron-Lawrence/EpuBuilder/blob/master/templateFiles/error_404.jpg)
 
 
