@@ -2,7 +2,7 @@
 
 一个简易的电子书ePub制作器，支持插图。
 
-### 使用方法
+## 使用方法
 首先你需要定义一个字典对象，这个字典应该符合以下结构：
 ```py
 BOOK = {
@@ -49,7 +49,7 @@ BOOKNAME.Build() #导出为epub,括号内可以指定导出目录（默认导出
 ```
 就可以导出一本ePub了
 
-### 插图的添加方法
+## 插图的添加方法
 
 首先你需要在你的段落中添加以下标识： `%img%` `这个图片的文件名（带后缀）` `%/img%`
 
@@ -72,5 +72,5 @@ BOOKNAME.setImagedir(r'./images') #括号里面为你想指定的插图目录。
 ![流泪猫猫头 图片](https://github.com/Macaron-Lawrence/EpuBuilder/blob/master/templateFiles/error_404.jpg)
 
 
-### 注意事项及其他
+## 注意事项及其他
 应该没了。
