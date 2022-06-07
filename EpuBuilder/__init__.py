@@ -8,7 +8,7 @@ from PIL import Image
 import shutil
 
 
-
+# 测试内容懒得删
 # BOOK = {
 #     "meta":{
 #         "title" : 'THIS IS TITLE',
@@ -123,9 +123,10 @@ class EpuBuild():
         ##image
         self.images = []
         self.imagesrc = ''
-        self.cover = r'./cover.jpg'
+        self.cover = r'./templateFiles/default_cover.jpg'
         self.coverSize = ()
 
+        self.chapternum_ForPrint = 0
     def setImagedir(self, src:str=r'./images'):
         self.images = os.listdir(src)
         self.imagesrc = src + r'/'
@@ -186,6 +187,7 @@ class EpuBuild():
         return book
 
     def Build(self, src:str=r'./output'):
+        print('>> EpuBuilder程序启动！', flush=True)
         book = self.booktoTemp()
 
         localaddress = r'./output'
@@ -194,13 +196,18 @@ class EpuBuild():
 
         os.makedirs(META_Path,exist_ok = True)
         os.makedirs(Image_Path + r'/cover',exist_ok = True)
-
+        printernum = 1
         ##print('创建XHTML文件中')
         for file in book:
+            self.print33_creat(printernum, len(book), book[file]['src'])
             self.creatFile(book[file]['content'], book[file]['src'])
+            printernum += 1
+        print('\r'.ljust(200), flush=True, end='')
+        print('\r>> 文件创建完成 |#################################| 100.0% | - ', flush=True, end='')
         self.creatImg(Image_Path)
 
         ##print('创建封面预览文件中')
+        print('\n\n>> 正在创建封面预览', flush=True)
         coverguide = self.Prase('coverguide.xhtml', {
             'width': str(self.coverSize[0]),
             'height' : str(self.coverSize[1])
@@ -208,10 +215,11 @@ class EpuBuild():
         self.creatFile(coverguide, r'/OEBPS/coverguide.xhtml')
 
         ##print('正在打包EPUB')
+        print('>> 正在导出为ePub', flush=True)
         shutil.make_archive(localaddress + r'/output_catch','zip', localaddress + r'/catch/EPUB')
         shutil.move(localaddress + r'/output_catch.zip',src + r'/' + self.meta['title'] + '.epub')
         shutil.rmtree(localaddress + r'/catch/EPUB')
-        print('>> 完成！')
+        print('>> ePub制作完成！')
 
     def creatImg(self, outputdir:str=r'./output/catch/EPUB/OEBPS/images'):
         ##print('正在转换图片')
@@ -340,7 +348,20 @@ class EpuBuild():
         text = text.replace('%img%','</p><br/>\n<img alt="image" src="images/').replace('%/img%','" />\n<br/><p>')
         return text
 
+    def print33_creat(self, indexnow, indextotal, title):  # 进度条
+        A_count = math.floor(indexnow/indextotal*33)
+        A = '#'*A_count
+        B = '-'*(33-A_count)
+        C = math.floor(indexnow/indextotal*1000)/10
+        if 'chap' in title:
+            chapname = self.chapters[self.chapternum_ForPrint]
+            if len(chapname) > 66:
+                chapname = chapname[:66]+'...'
+            title = title + ' | ' + chapname
+            self.chapternum_ForPrint +=1
+        print('\r>> 正在创建 |' + A + B + '| ' + str(C) + '% | ' + title, flush=True, end='')
+
 # B = EpuBuild(BOOK)
 # B.setCover('97311980_p0.png')
-# B.setImagedir()
+# # B.setImagedir()
 # B.Build('D:/Game')
