@@ -70,7 +70,7 @@ BOOKNAME.setImagedir(r'./images') #括号里面为你想指定的插图目录。
 
 否则那张图片会被替换为流泪猫猫头：
 
-![流泪猫猫头 图片](https://github.com/Macaron-Lawrence/EpuBuilder/blob/master/templateFiles/error_404.jpg)
+![流泪猫猫头 图片](https://github.com/Macaron-Lawrence/EpuBuilder/blob/master/EpuBuilder/templateFiles/error_404.jpg)
 
 
 ## 注意事项及其他
